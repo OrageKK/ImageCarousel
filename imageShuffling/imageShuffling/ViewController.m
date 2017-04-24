@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "shufflingView.h"
-@interface ViewController ()
+@interface ViewController ()<CarouselViewDelegate>
 
 @end
 
@@ -19,18 +19,40 @@
     shufflingView *myView = [[shufflingView alloc]
                          initWithFrame:CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width,
                                                   230)];
-    [self.view addSubview:myView];
+    
     
     NSArray *picDataArray = @[ @"1", @"2", @"3", @"4", @"5" ];
-    
+    NSArray *titleDataArray = @[ @"1", @"2", @"3", @"4", @"5" ];
     
     myView.picDataArray = [picDataArray copy];
+    
+    myView.titleDataArray = [titleDataArray copy];
+    
+    myView.titleLabelTextColor =
+    [UIColor colorWithRed:255/255 green:0 blue:0 alpha:1.0];
+    
+    myView.isAutomaticScroll = YES;
+    
+    myView.automaticScrollDelay = 2;
+    
+    myView.carouselViewStyle = ImageCarouselStyleBoth;
+    
+    myView.pageIndicatorTintColor = [UIColor colorWithRed:255/255 green:0/255 blue:255/255 alpha:1.0];
+    
+    myView.pageControlCurrentColor =
+    [UIColor colorWithRed:0/255 green:255/255 blue:255/255 alpha:1.0];
+    
+    myView.delegate = self;
+    
+    myView.picDataArray = [picDataArray copy];
+    
+    [self.view addSubview:myView];
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)didClick:(NSInteger)index {
+    
+    NSLog(@"%zd", index);
 }
 
 
