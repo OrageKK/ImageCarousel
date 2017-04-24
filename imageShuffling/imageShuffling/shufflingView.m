@@ -82,11 +82,20 @@
     CGPoint scrollViewOffset = [_mainScrollView contentOffset];
     // 如果当前位于centerImageView
     if (scrollViewOffset.x == 2 * _mainScrollView.bounds.size.width) {
-        
-        _currentImageIndex = (_currentImageIndex +1) % kImageCount;
+        if (_currentImageIndex == kImageCount - 1) {
+            _currentImageIndex = 0;
+        }else {
+            
+            _currentImageIndex = (_currentImageIndex +1) % kImageCount;
+        }
         
     } else if (scrollViewOffset.x == 0) {
-        _currentImageIndex = (_currentImageIndex -1) % kImageCount;
+        if (_currentImageIndex == 0) {
+            _currentImageIndex = kImageCount - 1;
+        }else {
+        
+            _currentImageIndex = (_currentImageIndex -1) % kImageCount;
+        }
         
     }
     
@@ -94,11 +103,9 @@
     [UIImage imageNamed:_picDataArray[self.currentImageIndex]];
     
     // 重新设置左右图片
-    _leftImageIndex = (_currentImageIndex -1) % kImageCount;
     _leftImageView.image =
     [UIImage imageNamed:_picDataArray[self.leftImageIndex]];
     
-    _rightImageIndex = (_currentImageIndex +1) % kImageCount;
     _rightImageView.image =
     [UIImage imageNamed:_picDataArray[self.rightImageIndex]];
     
@@ -124,6 +131,41 @@
      animated:NO];
 }
 
+- (NSUInteger)currentImageIndex {
+    
+    if (!_currentImageIndex) {
+        
+        _currentImageIndex = 0;
+    }
+    
+    return _currentImageIndex;
+}
+- (NSInteger)leftImageIndex {
+    
+    if (_currentImageIndex == 0) {
+        
+        _leftImageIndex = kImageCount - 1;
+        
+    } else {
+        
+        _leftImageIndex = _currentImageIndex - 1;
+    }
+    
+    return _leftImageIndex;
+}
+
+- (NSInteger)rightImageIndex {
+    
+    if (_currentImageIndex == kImageCount - 1) {
+        
+        _rightImageIndex = 0;
+    } else {
+        
+        _rightImageIndex = _currentImageIndex + 1;
+    }
+    
+    return _rightImageIndex;
+}
 - (void)setPicDataArray:(NSArray *)picDataArray {
     _picDataArray = picDataArray;
     
